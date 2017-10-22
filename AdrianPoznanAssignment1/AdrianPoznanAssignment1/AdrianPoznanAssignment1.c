@@ -200,8 +200,7 @@ void showInfo(struct moduleInfo list[], int numElements)
 	for (int x = 0; x < numElements; x++)
 	{
 		//prints all info of a module at position x in the list array
-		//printf("%s\t%s\t%d\t%s(CA)\t%s(t)",list[x].modName, list[x].moduleCode, list[x].modId, list[x].CA, list[x].exam);
-		printf("%s)", list[x].modName);
+		printf("\n%s\t\t\t%s\t%d\t%d(CA)\t%d(T)\n", list[x].modName,list[x].moduleCode,list[x].modId,list[x].CA,list[x].exam);
 	}
 
 
