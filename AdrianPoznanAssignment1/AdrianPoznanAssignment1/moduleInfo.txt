@@ -1,0 +1,15 @@
+C Programming
+SOFT_7019
+12689
+100
+0
+Wev Dev Fundamentals
+SOFT_6017
+12695
+40
+60
+Security
+SOFT_4123
+12690
+40
+60
