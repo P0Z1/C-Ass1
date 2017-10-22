@@ -322,7 +322,7 @@ void openWebPage(int id)
 	strcat(command, snum);  // "12689"
 
 	printf("Press ENTER to run the command:\n %s", command);
-	getch();
+	int enter=getch();
 
 	system(command);
 
