@@ -1,7 +1,4 @@
 ﻿  AdrianPoznanAssignment1.c
-c:\users\adrian\documents\github\c-ass1\adrianpoznanassignment1\adrianpoznanassignment1\adrianpoznanassignment1.c(134): warning C4101: 'aNumber': unreferenced local variable
-c:\users\adrian\documents\github\c-ass1\adrianpoznanassignment1\adrianpoznanassignment1\adrianpoznanassignment1.c(133): warning C4101: 'firstWord': unreferenced local variable
-c:\users\adrian\documents\github\c-ass1\adrianpoznanassignment1\adrianpoznanassignment1\adrianpoznanassignment1.c(215): warning C4028: formal parameter 3 different from declaration
-c:\users\adrian\documents\github\c-ass1\adrianpoznanassignment1\adrianpoznanassignment1\adrianpoznanassignment1.c(222): warning C4047: '==': 'int' differs in levels of indirection from 'char [2]'
+c:\users\adrian\documents\github\c-ass1\adrianpoznanassignment1\adrianpoznanassignment1\adrianpoznanassignment1.c(325): warning C4013: 'getch' undefined; assuming extern returning int
   AdrianPoznanAssignment1.vcxproj -> C:\Users\Adrian\Documents\GitHub\C-Ass1\AdrianPoznanAssignment1\Debug\AdrianPoznanAssignment1.exe
   AdrianPoznanAssignment1.vcxproj -> C:\Users\Adrian\Documents\GitHub\C-Ass1\AdrianPoznanAssignment1\Debug\AdrianPoznanAssignment1.pdb (Partial PDB)

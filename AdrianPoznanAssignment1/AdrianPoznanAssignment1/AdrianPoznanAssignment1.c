@@ -24,7 +24,7 @@ void getModuleDetails(struct moduleInfo* moduleInfo);
 int loadInfo(struct moduleInfo list[]);
 void showInfo(struct moduleInfo list[], int numOfElements);
 void openWebPage(int id);
-void generateCode(char* longName, char* shortName, int max);
+void generateCode(const char* longName, char* shortName,const int max);
 
 int main()
 {
@@ -78,8 +78,16 @@ int main()
 		case 2: /*Call function here to do the required operation*/
 			printf("options");
 
-			struct moduleInfo newModule;
-			getModuleDetails(&newModule);
+			//struct moduleInfo newModule;
+
+			//char test[] = "test";
+			//strcpy(newModule.modName, test);
+			
+			//call getModuleDetails with the address of the next free slot in the listOfModules array
+			getModuleDetails(&listOfModules[noOfElements]);
+			
+			//imcrement the number of elements in the listOfModules array
+			noOfElements++;
 
 			break;
 		case 3:
@@ -101,12 +109,60 @@ int main()
 
 
 
+void getModuleDetails(struct moduleInfo* pModuleInfo)
+{	
+	//local variables to hold user input and length of name
+	char name[MAX+1] = "";
+	char code[MAX + 1] = "";
+	int id = 0;
+	int ca = 0;
+	int ex = 0;
+	int len = 0;
+	
+	//ask for name
+	printf("\nENTER MODULE NAME:\n");
 
+	//doesnt wait for input... cant get it to work
+	//fgets(name, MAX, stdin);
 
+	//scanf waits for user input...
+	scanf("%s", name);
 
-void getModuleDetails(struct moduleInfo* moduleInfo)
-{
+	//set len to length of name
+	len = strlen(name);
 
+	//put \0 at end of name
+	name[len] = '\0';
+
+	//ask for code
+	printf("\nENTER MODULE CODE:");
+	//take input
+	scanf("%s", code);
+
+	//ask for id
+	printf("\nENTER MODULE ID:");
+	//take input
+	scanf("%d", &id);
+
+	//ask for ca
+	printf("\nENTER MODULE CONT. ASSESMENT WEIGHTING:");
+	//take input
+	scanf("%d", &ca);
+
+	//ask for exam
+	printf("\nENTER MODULE EXAM WEIGHTING:");
+	//take input
+	scanf("%d", &ex);
+
+	//test value of name
+	//printf("\nvalue of name: %s\n", name);
+
+	//put local variables values into the fields of the struct passed in by address
+	strcpy((*pModuleInfo).modName,name);
+	strcpy((*pModuleInfo).moduleCode, code);
+	(*pModuleInfo).modId = id;
+	(*pModuleInfo).CA = ca;
+	(*pModuleInfo).exam = ex;
 
 }
 
@@ -130,8 +186,8 @@ int loadInfo(struct moduleInfo list[])
 		{
 			printf("Reading line type: %d : %s\n", lineType, line);
 
-			char firstWord[100];
-			int aNumber;
+			//char firstWord[100];
+			//int shortIndex = 1;int aNumber;
 
 			//  remove /n from end of line
 			int len = strlen(line);
@@ -147,26 +203,33 @@ int loadInfo(struct moduleInfo list[])
 			//sscanf(line, "%s", firstWord);
 			//sscanf(line, "%d", &aNumber);
 
+
+
+			//if at line 0 of mofule details in the file
 			if (lineType == 0)
 			{
 				//copy module name from line into modName field of an element at position itemsRead in the list array
 				strcpy(list[itemsRead].modName, line);
 			}
+			//if at line 1 of mofule details in the file
 			else if (lineType == 1)
 			{
 				//copy module code from line into moduleCode field of an item at position itemsRead in list array
 				strcpy(list[itemsRead].moduleCode, line);
 			}
+			//if at line 1 of mofule details in the file
 			else if (lineType == 2)
 			{
 				//stores module id in modId field of an element at position itemsRead in the list array
 				sscanf(line, "%d" , &list[itemsRead].modId);
 			}
+			//if at line 3 of mofule details in the file
 			else if (lineType == 3)
 			{
 				//stores continious assesment mark in the CA field of an element at position itemsRead in the list array
 				sscanf(line, "%d", &list[itemsRead].CA);
 			}
+			//if at line 4 of mofule details in the file
 			else if (lineType == 4)
 			{
 				//stores final exam mark in the exam field of an element at position itemsRead in the list array
@@ -194,56 +257,73 @@ int loadInfo(struct moduleInfo list[])
 
 
 
-
+//displays module information to the user via the console
 void showInfo(struct moduleInfo list[], int numElements)
 {
+	//holds the short version of modName
+	char shortName[MAX] = "";
+
+	//for each element
 	for (int x = 0; x < numElements; x++)
 	{
-		//prints all info of a module at position x in the list array
-		printf("\n%s\t\t\t%s\t%d\t%d(CA)\t%d(T)\n", list[x].modName,list[x].moduleCode,list[x].modId,list[x].CA,list[x].exam);
-	}
+		//call generate code to fill shortName with modules short name
+		generateCode(list[x].modName, shortName, MAX);
 
-
-
-
-
-	// from board
+		//print all info of a module at position x in the list array
+		printf("\n%s\t%s\t%d\t%d(CA)\t%d(T)\n", shortName/*list[x].modName*/,list[x].moduleCode,list[x].modId,list[x].CA,list[x].exam);
+	}//end of for loop
 }
 
 
-void generateCode(char* longName, char *shortName, const int max)
+//generates short names for modules from their full names
+void generateCode(const char* longName, char *shortName, const int max)
 {
+	//length of module name
 	int len = strlen(longName);
-	int i = 0;
-	int shortPos = 0;
-	char prev = '-';
-	while (i < len)
+
+	//position in shortName[]
+	int shortIndex = 1;
+
+	//the first character in shortName will always be the first character in longName
+	shortName[0] = longName[0];
+
+	
+	// as long as x is less than the length of the longName
+	for (int x = 1; x < len; x++)
 	{
-		if ((prev == "-") || prev == ' ')
+		//if a space at position x in longName
+		if (longName[x] == ' ')
 		{
-			shortName[shortPos] = longName[i];
-			shortPos++;
-		}
-		prev = longName[i];
-		i++;
-	}
-	shortName[shortPos] = '\0';
+			//take the character after the space and put it in shortName at position shortIndex
+			shortName[shortIndex] = longName[(x+1)];
+		
+			//increment shortIndex
+			shortIndex++;
+		}//end of if
+	}//end of for loop
+
+	//put \0 at the end of shortName to end it
+	shortName[shortIndex] = '\0';
 }
-
-
-
-//end of from board
-
-
-
-
-
-
-
 
 
 
 void openWebPage(int id)
 {
+	char command[500];
+	char url[] = "https://courses.cit.ie/index.cfm/page/module/moduleId/";
+	char internet[] = "C:\\PROGRA~1\\INTERN~1\\iexplore.exe ";
+	
+
+	strcpy(command, internet);
+	strcat(command, url);
+	char snum[MAX];
+	_itoa(id, snum, MAX);
+	strcat(command, snum);  // "12689"
+
+	printf("Press ENTER to run the command:\n %s", command);
+	getch();
+
+	system(command);
 
 }
