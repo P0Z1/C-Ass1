@@ -42,7 +42,7 @@ int main()
 	noOfElements = loadInfo(listOfModules);
 
 	//testing
-	printf("%d modules read from file\n", noOfElements);
+	/*printf("%d modules read from file\n", noOfElements);
 	printf("%s\n", listOfModules[0].modName);
 	printf("%s\n", listOfModules[0].moduleCode);
 	printf("%d\n", listOfModules[0].modId);
@@ -57,7 +57,7 @@ int main()
 	printf("%s\n", listOfModules[2].moduleCode);
 	printf("%d\n", listOfModules[2].modId);
 	printf("%d\n", listOfModules[2].CA);
-	printf("%d\n", listOfModules[2].exam);
+	printf("%d\n", listOfModules[2].exam);*/
 
 
 	do
@@ -93,7 +93,7 @@ int main()
 		case 3:
 			printf("OpenWebPage here for the first module in the list.\n");
 			getchar();
-			openWebPage(1245);
+			openWebPage(listOfModules[0].modId);
 			break;
 		case 4:
 			printf("Goodbye\n");
@@ -122,11 +122,11 @@ void getModuleDetails(struct moduleInfo* pModuleInfo)
 	//ask for name
 	printf("\nENTER MODULE NAME:\n");
 
-	//doesnt wait for input... cant get it to work
-	//fgets(name, MAX, stdin);
+	//use getchar() to stop fgets() from skipping a line
+	getchar();
 
-	//scanf waits for user input...
-	scanf("%s", name);
+	//get input from user
+	fgets(name, MAX, stdin);
 
 	//set len to length of name
 	len = strlen(name);
@@ -307,10 +307,14 @@ void generateCode(const char* longName, char *shortName, const int max)
 }
 
 
-
+//opens a web page based on the id passed in
 void openWebPage(int id)
 {
-	char command[500];
+	//code from blackboard slightly modified
+
+	//printf("\nID comming into method is: %d\n", id);
+
+	char command[500];//used 500 instead of MAX_COMMAND
 	char url[] = "https://courses.cit.ie/index.cfm/page/module/moduleId/";
 	char internet[] = "C:\\PROGRA~1\\INTERN~1\\iexplore.exe ";
 	
@@ -318,11 +322,11 @@ void openWebPage(int id)
 	strcpy(command, internet);
 	strcat(command, url);
 	char snum[MAX];
-	_itoa(id, snum, MAX);
-	strcat(command, snum);  // "12689"
+	_itoa(id, snum, 10);//changed MAX to 10 for base 10
+	strcat(command, snum); 
 
-	printf("Press ENTER to run the command:\n %s", command);
-	int enter=getch();
+	printf("\nPress ENTER to run the command:\n %s", command);
+	getch();
 
 	system(command);
 
